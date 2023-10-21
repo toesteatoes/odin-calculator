@@ -32,3 +32,13 @@ function calculate(a, b, operand) {
   }
 }
 
+
+const display = document.getElementById("display");
+const buttons = document.getElementsByClassName("number");
+
+for (let i = 0; i < buttons.length; i++) {
+  buttons[i].textContent = i + 1;
+  buttons[i].addEventListener("click", function() {
+    display.textContent += buttons[i].textContent;
+  });
+}
