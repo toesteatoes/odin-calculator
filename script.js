@@ -55,6 +55,7 @@ const clearButton = document.getElementById("clear");
 clearButton.addEventListener("click", function() {
   int1 = undefined;
   int2 = undefined;
+  lastOperation = undefined;
   operator = '';
   display.textContent = '';
   operatorClear();
@@ -76,7 +77,7 @@ for (let i = 0; i < numbers.length; i++) {
       int1 = parseFloat(display.textContent);
     } else {
       int2 = parseInt(display.textContent);
-
+      lastOperation = calculate(int1, int2, operator);
     }
     operatorClear();
   });
@@ -85,13 +86,15 @@ for (let i = 0; i < numbers.length; i++) {
 
 //operator listeners
 for (let i = 0; i < operators.length; i++) {
-  let selected = false;
   operators[i].addEventListener("click", function() {
-    selected = true;
+    if (lastOperation !== undefined) {
+      int1 = lastOperation;
+    }
     operators[i].style.backgroundColor = "rgb(166, 158, 84)";
     operator = operators[i].textContent;
     isInt1 = false;
     shouldClear = true;
+    console.log(int1, int2, lastOperation, operator);
   });
 }
 
