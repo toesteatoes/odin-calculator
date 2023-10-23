@@ -3,7 +3,7 @@ function add(a, b) {
 return a + b;
 }
 
-function subtract(a ,b) {
+function subtract(a, b) {
   return a - b;
 }
 
@@ -18,13 +18,13 @@ function divide(a, b) {
 function calculate(a, b, operator) {
   switch (operator) {
     case "+":
-      return int1 = add(a, b);
+      return add(a, b);
     case "-":
-      return int1 = subtract(a, b);
+      return subtract(a, b);
     case "*":
-      return int1 = multiply(a, b);
+      return multiply(a, b);
     case "/":
-      return int1 = divide(a, b);
+      return divide(a, b);
   }
 }
 
@@ -32,8 +32,10 @@ function calculate(a, b, operator) {
 //GLOBAL VARS
 let int1;
 let int2;
+let lastOperation;
 let operator;
 let isInt1 = true;
+let shouldClear;
 
 
 //OPERATOR COLOR RESET FUNCTION
@@ -62,11 +64,24 @@ clearButton.addEventListener("click", function() {
 //number listeners
 for (let i = 0; i < numbers.length; i++) {
   numbers[i].textContent = i + 1;
+  numbers[9].textContent = 0;
+  numbers[10].textContent = '.';
   numbers[i].addEventListener("click", function() {
+    if (shouldClear) {
+      display.textContent = '';
+      shouldClear = false;
+    }
     display.textContent += numbers[i].textContent;
+    if (isInt1) {
+      int1 = parseFloat(display.textContent);
+    } else {
+      int2 = parseInt(display.textContent);
+
+    }
     operatorClear();
   });
 }
+
 
 //operator listeners
 for (let i = 0; i < operators.length; i++) {
@@ -74,9 +89,9 @@ for (let i = 0; i < operators.length; i++) {
   operators[i].addEventListener("click", function() {
     selected = true;
     operators[i].style.backgroundColor = "rgb(166, 158, 84)";
-    operand = operators[i].textContent;
-    int1 = display.textContent;
+    operator = operators[i].textContent;
     isInt1 = false;
+    shouldClear = true;
   });
 }
 
@@ -84,4 +99,7 @@ for (let i = 0; i < operators.length; i++) {
 const equals = document.getElementById("equals");
 equals.addEventListener("click", function() {
   display.textContent = calculate(int1, int2, operator);
+  int1 = calculate(int1, int2, operator);
+  int2 = undefined;
+  isInt1 = false;
 });
